@@ -37,11 +37,11 @@ const PROJECTS = [
     coverA: "#ff8a3c", coverB: "#ff5470",
     category: "工具系统", categoryEn: "Tooling",
     title: "排班系统", titleEn: "Shift Planning System",
-    desc: "基于 TypeScript 的排班管理系统，支持本地运行与部署。",
-    descEn: "TypeScript-based shift planning system, runnable and deployable locally.",
-    keywords: ["排班", "系统", "typescript", "shift", "planning"],
-    link: "https://github.com/ZJQAQ-png/Shift-plannning-system",
-    status: "GitHub 仓库 · Node.js", statusEn: "GitHub repo · Node.js",
+    desc: "已上线公网、可直接试用的排班系统：员工/班次管理、周排班表、冲突检测。",
+    descEn: "Live, publicly usable shift planner: staff/shifts management, weekly board, conflict detection.",
+    keywords: ["排班", "系统", "shift", "planning", "试用", "demo"],
+    link: "https://zj-works-portfolio.app.workbuddy.host/?sharecode=72I2PW44A7",
+    status: "公网可试用 · 在线服务", statusEn: "Live · try it now",
   },
 ];
 
