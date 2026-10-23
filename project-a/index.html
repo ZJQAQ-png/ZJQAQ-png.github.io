@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project A · 子路径示例</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <h1>🧩 Project A</h1>
+    <p>这是挂在 <code>/project-a/</code> 子路径下的<strong>独立项目</strong>示例。</p>
+    <p>关键点：页面内所有资源都使用 <code>./</code> 相对路径（<code>./style.css</code>、<code>./app.js</code>），因此无论部署在根域还是子路径下都能正确加载，不会 404。</p>
+    <button id="btn">点我 +1</button>
+    <p>计数：<span id="count">0</span></p>
+    <p class="back"><a href="../">← 返回作品集首页</a></p>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
