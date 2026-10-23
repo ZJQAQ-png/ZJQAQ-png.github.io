@@ -55,18 +55,6 @@ const PROJECTS = [
     link: "./wanchao/",
     status: "单人立即可用", statusEn: "Single-player ready",
   },
-  {
-    id: "projecta",
-    icon: "🧩",
-    coverA: "#2f6df6", coverB: "#22c1a4",
-    category: "示例", categoryEn: "Demo",
-    title: "子路径示例", titleEn: "Subpath Demo",
-    desc: "演示 GitHub Pages 子目录托管：/project-a/ 如何作为独立项目运行。",
-    descEn: "Demo of GitHub Pages subpath hosting at /project-a/.",
-    keywords: ["示例", "demo", "subpath", "子路径", "example"],
-    link: "./project-a/",
-    status: "示例 · 可点击", statusEn: "Demo · clickable",
-  },
 ];
 
 /* ---------- 中英文字典（界面文案） ---------- */
