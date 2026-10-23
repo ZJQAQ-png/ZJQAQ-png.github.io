@@ -8,52 +8,40 @@
 
 const PROJECTS = [
   {
-    id: "lumipilot",
-    icon: "💡",
-    coverA: "#6a8dff", coverB: "#3aa0ff",
-    category: "研发工具", categoryEn: "R&D tools",
-    title: "LumiPilot", titleEn: "LumiPilot",
-    desc: "照明研发决策工作台：客户情报、方案生成与商机管理。",
-    descEn: "Lighting R&D workbench: customer intel, proposals and pipeline.",
-    keywords: ["照明", "研发", "方案", "lighting", "rd", "proposal"],
-    link: "./LumiPilot/",
-    status: "账号登录 · 线上只读", statusEn: "Sign-in · read-only",
+    id: "all-project",
+    icon: "🌐",
+    coverA: "#2f6df6", coverB: "#22c1a4",
+    category: "网站", categoryEn: "Website",
+    title: "All Project", titleEn: "All Project",
+    desc: "项目聚合网站：集中展示与导航各类个人项目。",
+    descEn: "Project aggregation website: a central hub linking all personal projects.",
+    keywords: ["项目", "网站", "导航", "project", "web", "portfolio"],
+    link: "https://github.com/ZJQAQ-png/all-project",
+    status: "GitHub 仓库", statusEn: "GitHub repo",
   },
   {
-    id: "lumina",
-    icon: "🌆",
-    coverA: "#b06aff", coverB: "#ff6a9c",
-    category: "场景仿真", categoryEn: "Simulation",
-    title: "LUMINA", titleEn: "LUMINA",
-    desc: "三维布灯、照度核算与 IES 配光分析演示系统。",
-    descEn: "3D layout, illuminance calc and IES photometry demo.",
-    keywords: ["仿真", "照度", "IES", "simulation", "lighting"],
-    link: "./LUMINA/",
-    status: "仅供演示 · 无需安装", statusEn: "Demo only · no install",
+    id: "ai-for-eaws",
+    icon: "🤖",
+    coverA: "#b06aff", coverB: "#6a8dff",
+    category: "人工智能", categoryEn: "AI",
+    title: "AI for EAWS", titleEn: "AI for EAWS",
+    desc: "面向 EAWS 的人工智能应用项目。",
+    descEn: "AI application project for EAWS.",
+    keywords: ["AI", "人工智能", "EAWS", "machine learning"],
+    link: "https://github.com/ZJQAQ-png/AI-for-EAWS",
+    status: "GitHub 仓库", statusEn: "GitHub repo",
   },
   {
-    id: "viet",
-    icon: "🗣️",
-    coverA: "#22c1a4", coverB: "#2f9bff",
-    category: "语言学习", categoryEn: "Language",
-    title: "越语冒险", titleEn: "Vietnamese Adventure",
-    desc: "越南语闯关学习系统，支持手机主屏安装与离线缓存。",
-    descEn: "Vietnamese learning with PWA install and offline cache.",
-    keywords: ["越南语", "学习", "vietnamese", "language", "pwa"],
-    link: "./vietnamese-learning/",
-    status: "无需账号 · 进度存本机", statusEn: "No account · local save",
-  },
-  {
-    id: "wanchao",
-    icon: "⚔️",
+    id: "shift-plannning-system",
+    icon: "🗓️",
     coverA: "#ff8a3c", coverB: "#ff5470",
-    category: "策略游戏", categoryEn: "Strategy",
-    title: "万朝逐鹿", titleEn: "Wanchao",
-    desc: "跨朝代实时战略，六朝阵营、真实地名城池、单人练兵。",
-    descEn: "Cross-dynasty RTS with six factions and real-map cities.",
-    keywords: ["游戏", "策略", "game", "rts", "strategy"],
-    link: "./wanchao/",
-    status: "单人立即可用", statusEn: "Single-player ready",
+    category: "工具系统", categoryEn: "Tooling",
+    title: "排班系统", titleEn: "Shift Planning System",
+    desc: "基于 TypeScript 的排班管理系统，支持本地运行与部署。",
+    descEn: "TypeScript-based shift planning system, runnable and deployable locally.",
+    keywords: ["排班", "系统", "typescript", "shift", "planning"],
+    link: "https://github.com/ZJQAQ-png/Shift-plannning-system",
+    status: "GitHub 仓库 · Node.js", statusEn: "GitHub repo · Node.js",
   },
 ];
 
@@ -198,7 +186,8 @@ function renderGrid() {
         '<p class="card-desc">' + desc + "</p>" +
         '<div class="card-foot">' +
           '<span class="card-status">' + status + "</span>" +
-          '<a class="card-link" href="' + p.link + '">' +
+          '<a class="card-link" href="' + p.link + '"' +
+            (p.link.startsWith("http") ? ' target="_blank" rel="noopener"' : "") + ">" +
             (lang === "zh" ? "打开" : "Open") + "</a>" +
         "</div>" +
       "</div>";
