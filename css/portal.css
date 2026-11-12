@@ -1,5 +1,7 @@
 /* Portal-specific layout. The reference's brand, lighting scenes and theme remain. */
 body { --text-mute: #879bbd; }
+/* Keep the workspace navigation at the viewport edge on wide screens. */
+.layout { max-width: none; margin: 0; }
 html { scroll-padding-top: 100px; }
 .visitor-chip { color: #b8d9f6; padding: 7px 12px; border: 1px solid var(--line); border-radius: 30px; font-size: 12px; white-space: nowrap; }
 .hero { min-height: 245px; }
