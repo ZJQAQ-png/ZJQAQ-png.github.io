@@ -118,7 +118,8 @@
   grid.innerHTML = DEPTS.map((d, i) => {
     const state = states[i];
     const planned = state.status === 'planned';
-    return `<article class="workspace-card ${planned ? 'workspace-card--planned' : ''}" id="dept-${d.key}" style="--c:${d.color}">
+    return `<article class="workspace-card ${planned ? 'workspace-card--planned' : ''}" id="dept-${d.key}" data-key="${d.key}" tabindex="0" aria-label="${d.name}" style="--c:${d.color}">
+      <span class="dept-card__corners" aria-hidden="true"></span>
       <div class="workspace-card__top"><span class="workspace-card__icon">${d.icon}</span><span class="workspace-badge">${planned ? '待开发' : state.url ? '入口已配置' : '已有项目 · 待接入'}</span></div>
       <h3>${d.name}</h3><p>${d.desc}</p>
       ${d.tags ? `<ul class="workspace-tags">${d.tags.map(t => `<li>${t}</li>`).join('')}</ul>` : '<div class="workspace-placeholder" aria-hidden="true">COMING SOON</div>'}
@@ -137,6 +138,7 @@
   const sidebar = document.getElementById('sidebar-modules');
   sidebar.innerHTML = DEPTS.map(d => `<a class="side-item" href="#dept-${d.key}" data-side-key="${d.key}" aria-label="${d.name}${d.available ? '' : '，待开发'}" title="${d.name}"><span class="side-item__icon" style="color:${d.color}">${d.icon}</span><span class="side-item__label">${d.name}</span>${d.available ? '' : '<span class="side-item__badge">待开发</span>'}</a>`).join('');
   const search = document.getElementById('global-search');
+  const carousel = window.PortalCarousel.init();
   sidebar.querySelectorAll('svg').forEach(svg => svg.setAttribute('aria-hidden', 'true'));
   function filter() {
     const query = search.value.trim().toLowerCase();
@@ -147,14 +149,18 @@
       if (!card.hidden) matches++;
     });
     document.getElementById('search-empty').hidden = matches > 0;
+    carousel?.refresh();
   }
   search.addEventListener('input', filter);
   sidebar.addEventListener('click', e => {
     const link = e.target.closest('[data-side-key]');
     if (!link) return;
+    e.preventDefault();
     search.value = ''; filter();
     document.querySelectorAll('.side-item').forEach(el => el.classList.remove('is-active'));
     link.classList.add('is-active');
+    carousel?.goToKey(link.dataset.sideKey, true);
+    document.getElementById('departments').scrollIntoView({ block: 'start' });
   });
   grid.addEventListener('click', e => {
     const button = e.target.closest('[data-pending]');
