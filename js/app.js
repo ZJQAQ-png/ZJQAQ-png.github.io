@@ -118,13 +118,15 @@
   grid.innerHTML = DEPTS.map((d, i) => {
     const state = states[i];
     const planned = state.status === 'planned';
-    return `<article class="workspace-card ${planned ? 'workspace-card--planned' : ''}" id="dept-${d.key}" data-key="${d.key}" tabindex="0" aria-label="${d.name}" style="--c:${d.color}">
+    const tag = state.url ? 'a' : 'article';
+    const linkAttrs = state.url ? `data-entry="${d.key}" target="_blank" rel="noopener noreferrer"` : '';
+    return `<${tag} class="workspace-card ${planned ? 'workspace-card--planned' : ''}" id="dept-${d.key}" data-key="${d.key}" ${linkAttrs} tabindex="0" aria-label="${d.name}" style="--c:${d.color}">
       <span class="dept-card__corners" aria-hidden="true"></span>
       <div class="workspace-card__top"><span class="workspace-card__icon">${d.icon}</span><span class="workspace-badge">${planned ? '待开发' : state.url ? '入口已配置' : '已有项目 · 待接入'}</span></div>
       <h3>${d.name}</h3><p>${d.desc}</p>
       ${d.tags ? `<ul class="workspace-tags">${d.tags.map(t => `<li>${t}</li>`).join('')}</ul>` : '<div class="workspace-placeholder" aria-hidden="true">COMING SOON</div>'}
-      <div class="workspace-card__foot">${planned ? '<span>敬请期待</span><span aria-hidden="true">＋</span>' : state.url ? `<a data-entry="${d.key}" target="_blank" rel="noopener noreferrer"><span data-entry-label>打开工作台</span><span aria-hidden="true">↗</span></a>` : `<button type="button" data-pending="${d.key}">查看接入状态 <span aria-hidden="true">→</span></button>`}</div>
-    </article>`;
+      <div class="workspace-card__foot">${planned ? '<span>敬请期待</span><span aria-hidden="true">＋</span>' : state.url ? `<span class="workspace-entry-label"><span>打开工作台</span><span aria-hidden="true">↗</span></span>` : `<button type="button" data-pending="${d.key}">查看接入状态 <span aria-hidden="true">→</span></button>`}</div>
+    </${tag}>`;
   }).join('');
   // Assign URLs as DOM properties, never as interpolated markup.
   grid.querySelectorAll('[data-entry]').forEach(a => {

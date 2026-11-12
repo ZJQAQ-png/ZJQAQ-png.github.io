@@ -4,12 +4,6 @@
   function wrapIndex(index, count) {
     return count > 0 ? ((index % count) + count) % count : 0;
   }
-  function activateCard(card, event) {
-    const entry = card.querySelector('[data-entry], [data-pending]');
-    if (!entry || event?.target.closest('[data-entry], [data-pending]')) return;
-    event?.preventDefault();
-    entry.click();
-  }
   function init() {
     const ring = document.getElementById('dept-grid');
     const stage = document.querySelector('.carousel3d');
@@ -21,7 +15,7 @@
     const bg = document.getElementById('carousel3d-bg');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     let cards = all, center = 0, target = 0, frame = 0, touch = null;
-    let pointerDown = false, suppressClickUntil = 0, openingEntry = false;
+    let pointerDown = false, suppressClickUntil = 0;
 
     function layout() {
       const active = cards[Math.round(center)];
@@ -71,11 +65,6 @@
     prev.addEventListener('click', () => goTo(Math.round(target) - 1));
     next.addEventListener('click', () => goTo(Math.round(target) + 1));
     stage.addEventListener('keydown', event => {
-      if (['Enter', ' '].includes(event.key) && !event.target.closest('a, button')) {
-        const card = event.target.closest('.workspace-card');
-        if (card) { event.preventDefault(); activate(card); }
-        return;
-      }
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
       if (event.key === 'Home') goTo(0);
@@ -88,19 +77,13 @@
         goToKey(card.dataset.key, true);
       }
     });
-    function activate(card, event) {
-      openingEntry = true;
-      try { activateCard(card, event); } finally { openingEntry = false; }
-    }
     ring.addEventListener('click', event => {
-      if (openingEntry) return;
       if (performance.now() < suppressClickUntil) {
         event.preventDefault(); event.stopImmediatePropagation(); return;
       }
-      const card = event.target.closest('.workspace-card');
-      if (card) activate(card, event);
     }, true);
     stage.addEventListener('pointerdown', event => {
+      suppressClickUntil = 0; // A fresh tap must never inherit suppression from the previous swipe.
       pointerDown = true;
       // Freeze in-flight movement before mouse focus can move a card underneath the pointer.
       cancelAnimationFrame(frame); frame = 0; target = center;
@@ -124,7 +107,7 @@
     refresh();
     return { goToKey, refresh };
   }
-  const api = { init, wrapIndex, activateCard };
+  const api = { init, wrapIndex };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.PortalCarousel = api;
 })(typeof window !== 'undefined' ? window : globalThis);

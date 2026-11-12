@@ -18,7 +18,7 @@ html { scroll-padding-top: 100px; }
 .carousel3d .workspace-card { position: absolute; left: 50%; top: 50%; width: min(300px,calc(100% - 24px)); min-height: 320px; will-change: transform,opacity; transition: border-color .2s,box-shadow .2s; }
 .workspace-card[hidden] { display: none; }
 .workspace-card.is-active { border-color: var(--c); box-shadow: 0 0 0 1px var(--c),0 0 44px -10px var(--c); }
-.workspace-card { cursor: pointer; }
+.workspace-card { cursor: pointer; color: var(--text); text-decoration: none; }
 .workspace-card:focus-visible { outline: 2px solid #75d5ff; outline-offset: 5px; }
 .workspace-card > :not(.dept-card__corners) { position: relative; z-index: 1; }
 .carousel__nav { font-size: 30px; }
@@ -36,7 +36,7 @@ html { scroll-padding-top: 100px; }
 .workspace-tags { display: flex; gap: 7px; flex-wrap: wrap; margin: 20px 0 22px; }
 .workspace-tags li { color: #a8c3df; background: #14243a; border-radius: 5px; padding: 3px 7px; font-size: 10px; }
 .workspace-card__foot { margin-top: auto; padding-top: 15px; border-top: 1px solid #22334b; color: var(--c); font-size: 13px; }
-.workspace-card__foot a,.workspace-card__foot button { display: flex; justify-content: space-between; width: 100%; color: inherit; text-align: left; font-size: inherit; padding: 4px 0; }
+.workspace-card__foot .workspace-entry-label,.workspace-card__foot button { display: flex; justify-content: space-between; width: 100%; color: inherit; text-align: left; font-size: inherit; padding: 4px 0; }
 .workspace-card--planned { background: #0a1425; border-color: #1b2a41; }
 .workspace-card--planned h3 { font-size: 18px; color: #b3c3d9; }
 .workspace-card--planned .workspace-card__icon { padding: 10px; opacity: .7; }
