@@ -123,7 +123,7 @@
       <div class="workspace-card__top"><span class="workspace-card__icon">${d.icon}</span><span class="workspace-badge">${planned ? '待开发' : state.url ? '入口已配置' : '已有项目 · 待接入'}</span></div>
       <h3>${d.name}</h3><p>${d.desc}</p>
       ${d.tags ? `<ul class="workspace-tags">${d.tags.map(t => `<li>${t}</li>`).join('')}</ul>` : '<div class="workspace-placeholder" aria-hidden="true">COMING SOON</div>'}
-      <div class="workspace-card__foot">${planned ? '<span>敬请期待</span><span aria-hidden="true">＋</span>' : state.url ? `<a data-entry="${d.key}" target="_blank" rel="noopener noreferrer">进入工作台 <span aria-hidden="true">↗</span></a>` : `<button type="button" data-pending="${d.key}">查看接入状态 <span aria-hidden="true">→</span></button>`}</div>
+      <div class="workspace-card__foot">${planned ? '<span>敬请期待</span><span aria-hidden="true">＋</span>' : state.url ? `<a data-entry="${d.key}" target="_blank" rel="noopener noreferrer"><span data-entry-label>打开工作台</span><span aria-hidden="true">↗</span></a>` : `<button type="button" data-pending="${d.key}">查看接入状态 <span aria-hidden="true">→</span></button>`}</div>
     </article>`;
   }).join('');
   // Assign URLs as DOM properties, never as interpolated markup.
@@ -134,7 +134,7 @@
   const pending = states.filter(s => s.status === 'pending').length;
   document.getElementById('portal-notice').textContent = pending
     ? `采购、研发、品保项目已具备本地应用，${pending} 个工作台的云端服务尚待接入。`
-    : '三个工作台均已配置公网入口，点击进入后按各应用要求登录。';
+    : '三个工作台开放免登录体验，所有访客共享历史与基础数据。';
   const sidebar = document.getElementById('sidebar-modules');
   sidebar.innerHTML = DEPTS.map(d => `<a class="side-item" href="#dept-${d.key}" data-side-key="${d.key}" aria-label="${d.name}${d.available ? '' : '，待开发'}" title="${d.name}"><span class="side-item__icon" style="color:${d.color}">${d.icon}</span><span class="side-item__label">${d.name}</span>${d.available ? '' : '<span class="side-item__badge">待开发</span>'}</a>`).join('');
   const search = document.getElementById('global-search');

@@ -1,12 +1,14 @@
-/* Restore the reference's mouse-following cover flow without demo business actions. */
+/* Stable 3D carousel: arrows/swipe browse; one click opens a workspace. */
 (function (root) {
   'use strict';
-  function pointerIndex(x, left, width, count) {
-    if (width <= 0 || count <= 1) return 0;
-    return Math.max(0, Math.min(1, (x - left) / width)) * (count - 1);
-  }
   function wrapIndex(index, count) {
     return count > 0 ? ((index % count) + count) % count : 0;
+  }
+  function activateCard(card, event) {
+    const entry = card.querySelector('[data-entry], [data-pending]');
+    if (!entry || event?.target.closest('[data-entry], [data-pending]')) return;
+    event?.preventDefault();
+    entry.click();
   }
   function init() {
     const ring = document.getElementById('dept-grid');
@@ -19,6 +21,7 @@
     const bg = document.getElementById('carousel3d-bg');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     let cards = all, center = 0, target = 0, frame = 0, touch = null;
+    let pointerDown = false, suppressClickUntil = 0, openingEntry = false;
 
     function layout() {
       const active = cards[Math.round(center)];
@@ -67,13 +70,12 @@
     }
     prev.addEventListener('click', () => goTo(Math.round(target) - 1));
     next.addEventListener('click', () => goTo(Math.round(target) + 1));
-    stage.addEventListener('pointermove', event => {
-      if (event.pointerType !== 'mouse' || reduce.matches || event.target.closest('a, button')) return;
-      const rect = stage.getBoundingClientRect();
-      move(pointerIndex(event.clientX, rect.left, rect.width, cards.length));
-    });
-    stage.addEventListener('pointerleave', () => move(Math.round(target)));
     stage.addEventListener('keydown', event => {
+      if (['Enter', ' '].includes(event.key) && !event.target.closest('a, button')) {
+        const card = event.target.closest('.workspace-card');
+        if (card) { event.preventDefault(); activate(card); }
+        return;
+      }
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
       if (event.key === 'Home') goTo(0);
@@ -82,26 +84,47 @@
     });
     ring.addEventListener('focusin', event => {
       const card = event.target.closest('.workspace-card');
-      if (card) goToKey(card.dataset.key, true);
+      if (card && !pointerDown) {
+        goToKey(card.dataset.key, true);
+      }
     });
+    function activate(card, event) {
+      openingEntry = true;
+      try { activateCard(card, event); } finally { openingEntry = false; }
+    }
+    ring.addEventListener('click', event => {
+      if (openingEntry) return;
+      if (performance.now() < suppressClickUntil) {
+        event.preventDefault(); event.stopImmediatePropagation(); return;
+      }
+      const card = event.target.closest('.workspace-card');
+      if (card) activate(card, event);
+    }, true);
     stage.addEventListener('pointerdown', event => {
-      if (event.pointerType === 'mouse' || event.target.closest('a, button')) return;
+      pointerDown = true;
+      // Freeze in-flight movement before mouse focus can move a card underneath the pointer.
+      cancelAnimationFrame(frame); frame = 0; target = center;
+      if (event.pointerType === 'mouse') return;
       touch = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      stage.setPointerCapture(event.pointerId);
     });
-    stage.addEventListener('pointerup', event => {
+    window.addEventListener('pointerup', event => {
+      pointerDown = false;
       if (!touch || event.pointerId !== touch.id) return;
       const dx = event.clientX - touch.x, dy = event.clientY - touch.y;
       touch = null;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) goTo(Math.round(target) + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        suppressClickUntil = performance.now() + 500;
+        goTo(Math.round(target) + (dx < 0 ? 1 : -1));
+      }
     });
-    stage.addEventListener('pointercancel', () => { touch = null; });
+    window.addEventListener('pointercancel', () => { touch = null; pointerDown = false; });
+    window.addEventListener('blur', () => { touch = null; pointerDown = false; });
     new ResizeObserver(layout).observe(stage);
     reduce.addEventListener('change', () => move(Math.round(target), true));
     refresh();
     return { goToKey, refresh };
   }
-  const api = { init, pointerIndex, wrapIndex };
+  const api = { init, wrapIndex, activateCard };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.PortalCarousel = api;
 })(typeof window !== 'undefined' ? window : globalThis);
