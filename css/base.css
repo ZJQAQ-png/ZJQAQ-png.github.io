@@ -1,0 +1,134 @@
+/* ============ 设计令牌 & 重置 ============ */
+:root {
+  --bg: #040810;
+  --bg-soft: #060d1c;
+  --panel: #0a1428;
+  --panel-2: #0d1830;
+  --panel-3: #101c38;
+  --line: #1b2a4a;
+  --line-soft: #15243f;
+  --text: #e6f0ff;
+  --text-dim: #9db2d6;
+  --text-mute: #5f769b;
+
+  --blue: #1b86d9;
+  --blue-2: #3fb6ff;
+  --cyan: #22d3ee;
+  --warm: #ffb45c;
+  --warm-2: #ffa657;
+  --green: #07c160;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 20px 60px rgba(2, 8, 20, .55);
+  --font: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input { font-family: inherit; color: inherit; }
+ul { list-style: none; }
+img, svg { display: block; }
+
+::selection { background: rgba(27, 134, 217, .35); }
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-soft); }
+::-webkit-scrollbar-thumb { background: #1b2a4a; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #26385f; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+[hidden] { display: none !important; }
+
+/* ============ 背景光效 ============ */
+.bg-field { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(27,134,217,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27,134,217,.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 78%);
+}
+.bg-beam {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); opacity: .5;
+  will-change: transform;
+}
+.bg-beam--a { width: 640px; height: 640px; top: -220px; left: 8%; background: radial-gradient(circle, rgba(27,134,217,.35), transparent 60%); }
+.bg-beam--b { width: 520px; height: 520px; top: 220px; right: -140px; background: radial-gradient(circle, rgba(34,211,238,.22), transparent 60%); }
+
+.stars { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ============ 品牌标 ============ */
+.brand-mark { width: 34px; height: 34px; flex: none; }
+
+/* ============ 通用按钮 ============ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px; border-radius: 12px;
+  font-size: 15px; font-weight: 600; letter-spacing: .2px;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s;
+  white-space: nowrap;
+}
+.btn--primary {
+  background: linear-gradient(135deg, var(--blue-2), var(--blue));
+  color: #fff; box-shadow: 0 10px 30px rgba(27,134,217,.35);
+}
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(27,134,217,.5); }
+.btn--ghost {
+  background: transparent; color: var(--text-dim);
+  border: 1px solid var(--line);
+}
+.btn--ghost:hover { border-color: var(--blue); color: var(--text); transform: translateY(-2px); }
+
+.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(7,193,96,.6); animation: pulse-dot 2s infinite; }
+.pulse-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 rgba(7,193,96,.55); }
+  70% { box-shadow: 0 0 0 7px rgba(7,193,96,0); }
+  100% { box-shadow: 0 0 0 0 rgba(7,193,96,0); }
+}
+
+/* ============ 节标题 ============ */
+.section-head { max-width: 680px; margin-bottom: 34px; }
+.section-head h2 {
+  font-size: clamp(26px, 3.4vw, 38px);
+  font-weight: 700; letter-spacing: -.5px; line-height: 1.2;
+}
+.section-head p { color: var(--text-dim); margin-top: 10px; font-size: 15.5px; }
+
+/* ============ 加载 spinner ============ */
+.spinner {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.2); border-top-color: #fff;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}

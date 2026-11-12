@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" id="root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品集 · My Works</title>
+  <meta name="description" content="个人项目作品集 · 静态托管 · 支持中英双语" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <h1 data-i18n="siteTitle">精选作品</h1>
+      <p class="subtitle" data-i18n="siteSubtitle">SELECTED WORK · 个人项目作品集</p>
+    </div>
+    <div class="controls">
+      <button id="langBtn" class="ctrl-btn" type="button" aria-label="切换语言">EN</button>
+      <button id="themeBtn" class="ctrl-btn" type="button" aria-label="切换主题">🌙</button>
+      <button id="guideBtn" class="ctrl-btn" type="button" data-i18n="guide">使用说明</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="search" id="searchInput" data-i18n-ph="searchPH" placeholder="搜索项目 / Search…" />
+      </div>
+      <div class="filters" id="filterBar"><!-- 由 main.js 生成 --></div>
+    </section>
+
+    <section class="grid" id="projectGrid" aria-live="polite"><!-- 由 main.js 渲染 --></section>
+
+    <section class="guide" id="guidePanel" hidden>
+      <h2 data-i18n="guideTitle">整站使用说明</h2>
+      <div class="guide-body" data-i18n-html="guideBody"></div>
+    </section>
+
+    <section class="about">
+      <button class="about-toggle" id="aboutToggle" type="button" data-i18n="aboutToggle">关于作者 ▾</button>
+      <div class="about-body" id="aboutBody" hidden>
+        <div data-i18n-html="aboutBody"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <button id="footerGuideBtn" class="link-btn" type="button" data-i18n="guide">整站使用说明</button>
+    <span class="views" id="homeViews" title="首页打开次数">—</span>
+  </footer>
+
+  <script src="./main.js"></script>
+</body>
+</html>

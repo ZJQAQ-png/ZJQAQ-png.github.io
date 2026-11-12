@@ -1,54 +1,194 @@
 <!DOCTYPE html>
-<html lang="zh" id="root">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>作品集 · My Works</title>
-  <meta name="description" content="个人项目作品集 · 静态托管 · 支持中英双语" />
-  <link rel="stylesheet" href="./styles.css" />
+  <title>得邦 AI 门户 · 智能工作台</title>
+  <meta name="description" content="得邦 AI 门户 —— 面向照明制造企业的内部 AI 工作台，连接采购、研发、品保工作台，探索企业 AI 应用。" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/portal.css" />
+  <link rel="icon" href="logo.png" />
 </head>
 <body>
+  <!-- 背景光效 -->
+  <div class="bg-field" aria-hidden="true">
+    <canvas class="stars" id="stars"></canvas>
+    <div class="bg-beam bg-beam--a"></div>
+    <div class="bg-beam bg-beam--b"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- ============ 顶部导航 ============ -->
   <header class="site-header">
-    <div class="brand">
-      <h1 data-i18n="siteTitle">精选作品</h1>
-      <p class="subtitle" data-i18n="siteSubtitle">SELECTED WORK · 个人项目作品集</p>
-    </div>
-    <div class="controls">
-      <button id="langBtn" class="ctrl-btn" type="button" aria-label="切换语言">EN</button>
-      <button id="themeBtn" class="ctrl-btn" type="button" aria-label="切换主题">🌙</button>
-      <button id="guideBtn" class="ctrl-btn" type="button" data-i18n="guide">使用说明</button>
+    <a class="brand" href="#top" aria-label="得邦 AI 门户首页">
+      <img class="brand-logo" src="logo.png" alt="得邦 logo" />
+      <span class="brand__name">得邦 AI 门户</span>
+    </a>
+    <div class="header-right">
+      <div class="search" role="search">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20 L16.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" id="global-search" placeholder="搜索工作台或功能…" aria-label="搜索工作台或功能" autocomplete="off" />
+      </div>
+<span class="visitor-chip">公开体验版</span>
     </div>
   </header>
 
-  <main>
-    <section class="toolbar">
-      <div class="search-wrap">
-        <span class="search-icon" aria-hidden="true">🔍</span>
-        <input type="search" id="searchInput" data-i18n-ph="searchPH" placeholder="搜索项目 / Search…" />
-      </div>
-      <div class="filters" id="filterBar"><!-- 由 main.js 生成 --></div>
-    </section>
+  <!-- ============ 布局：侧边栏 + 内容 ============ -->
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="侧边导航">
+      <nav class="sidebar__nav">
+        <a class="side-item is-active" href="#top" data-nav="home" title="首页">
+          <span class="side-item__icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 10.5L12 3l9 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9.5V21h14V9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 21v-6h4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="side-item__label">首页</span>
+        </a>
 
-    <section class="grid" id="projectGrid" aria-live="polite"><!-- 由 main.js 渲染 --></section>
 
-    <section class="guide" id="guidePanel" hidden>
-      <h2 data-i18n="guideTitle">整站使用说明</h2>
-      <div class="guide-body" data-i18n-html="guideBody"></div>
-    </section>
 
-    <section class="about">
-      <button class="about-toggle" id="aboutToggle" type="button" data-i18n="aboutToggle">关于作者 ▾</button>
-      <div class="about-body" id="aboutBody" hidden>
-        <div data-i18n-html="aboutBody"></div>
-      </div>
-    </section>
-  </main>
+        <div class="sidebar__modules" id="sidebar-modules"><!-- JS 渲染 --></div>
+      </nav>
+
+      <button class="sidebar__collapse" id="sidebar-toggle" type="button" title="收起导航" aria-label="收起导航">
+        <svg viewBox="0 0 24 24" width="18" height="18" class="collapse-chevron"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="sidebar__collapse-label">收起</span>
+      </button>
+    </aside>
+
+    <main class="content" id="top">
+      <!-- ============ HERO 欢迎语 ============ -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <p class="hero__kicker"><span class="pulse-dot"></span> 得邦照明 · 企业智能中枢</p>
+          <h1 id="hero-title" class="hero__title">欢迎访问得邦AI门户，<br /><em>在这里可以释放你的想象。</em></h1>
+          <p class="hero__sub">从采购到研发，从质量到创新。连接业务场景，让智能融入每一步工作。</p>
+        </div>
+        <div class="hero__mascot" aria-hidden="true">
+          <img class="mascot__img" src="人偶.png" alt="" />
+        </div>
+      </section>
+
+      <section class="stats" aria-label="工作台概览">
+        <div class="stat"><div class="stat__body"><strong class="stat__num">03</strong><span class="stat__label">已有工作台</span></div></div>
+        <div class="stat"><div class="stat__body"><strong class="stat__num" id="configured-count">00</strong><span class="stat__label">已配置公网入口</span></div></div>
+        <div class="stat"><div class="stat__body"><strong class="stat__num">05</strong><span class="stat__label">待开发模块</span></div></div>
+        <div class="stat"><div class="stat__body"><strong class="stat__num stat__num--text">AI PORTAL</strong><span class="stat__label">一站式业务入口</span></div></div>
+      </section>
+      <section class="departments" id="departments" aria-labelledby="departments-title">
+        <div class="section-head"><div><p class="section-eyebrow">YOUR WORKSPACE</p><h2 id="departments-title">选择你的工作台</h2></div><span class="section-note">连接专业，让协作更简单</span></div>
+        <p class="portal-notice" id="portal-notice">采购、研发、品保项目已具备本地应用，云端服务接入后即可从这里访问。</p>
+        <div class="portal-grid" id="dept-grid"></div>
+        <p id="search-empty" class="empty-state" hidden role="status">没有找到匹配的工作台，请换个关键词。</p>
+        <noscript><p class="portal-notice">请启用浏览器 JavaScript 查看工作台。当前三个工作台的云端服务尚待接入。</p></noscript>
+      </section>
+      <!-- ============ 3D 照明场景 ============ -->
+      <section class="scenes" id="scenes" aria-labelledby="scenes-title">
+        <div class="section-head">
+          <h2 id="scenes-title">让智能，照见更多可能</h2>
+          <p>以光为起点，探索民用、商用与车载照明的更多应用。</p>
+        </div>
+
+        <div class="scenes__grid">
+          <article class="scene-card">
+            <div class="scene3d scene3d--home" data-tilt data-tilt-max="14">
+              <div class="room">
+                <div class="face face--back"></div>
+                <div class="face face--floor"></div>
+                <div class="face face--left"></div>
+                <div class="face face--right"></div>
+                <div class="pendant">
+                  <div class="pendant__cord"></div>
+                  <div class="pendant__shade"></div>
+                  <div class="pendant__bulb"></div>
+                </div>
+                <div class="sofa"><div class="sofa__seat"></div><div class="sofa__back"></div></div>
+                <div class="plant"><span class="plant__leaf plant__leaf--1"></span><span class="plant__leaf plant__leaf--2"></span><span class="plant__leaf plant__leaf--3"></span></div>
+                <div class="frame"></div>
+              </div>
+              <div class="scene3d__glow scene3d__glow--warm"></div>
+            </div>
+            <div class="scene-card__body">
+              <span class="temp-chip temp-chip--warm">2700K · 暖光</span>
+              <h3>民用照明</h3>
+              <p>为居住空间营造温暖、护眼的光环境，智能调光随作息与场景自动流转。</p>
+              <ul class="scene-tags"><li>客厅</li><li>卧室</li><li>全屋智能</li><li>无主灯</li></ul>
+            </div>
+          </article>
+
+          <article class="scene-card">
+            <div class="scene3d scene3d--commercial" data-tilt data-tilt-max="14">
+              <div class="office">
+                <div class="face face--back"></div>
+                <div class="face face--floor"></div>
+                <div class="face face--left"></div>
+                <div class="ceiling"><span class="panel panel--1"></span><span class="panel panel--2"></span><span class="panel panel--3"></span></div>
+                <div class="desk"><div class="desk__top"></div><div class="desk__leg desk__leg--1"></div><div class="desk__leg desk__leg--2"></div></div>
+                <div class="monitor"><div class="monitor__screen"></div></div>
+                <div class="track"></div>
+              </div>
+              <div class="scene3d__glow scene3d__glow--cool"></div>
+            </div>
+            <div class="scene-card__body">
+              <span class="temp-chip temp-chip--neutral">4000K · 中性白</span>
+              <h3>商用照明</h3>
+              <p>高显色、高光效的稳定光输出，让办公与零售空间明亮、舒适且节能。</p>
+              <ul class="scene-tags"><li>办公</li><li>零售</li><li>酒店</li><li>节能改造</li></ul>
+            </div>
+          </article>
+
+          <article class="scene-card">
+            <div class="scene3d scene3d--auto" data-tilt data-tilt-max="14">
+              <div class="road">
+                <div class="road__plane">
+                  <div class="road__lane road__lane--l"></div>
+                  <div class="road__lane road__lane--r"></div>
+                </div>
+                <div class="car">
+                  <div class="car__body"></div>
+                  <div class="car__cabin"></div>
+                  <div class="car__headlight car__headlight--l"></div>
+                  <div class="car__headlight car__headlight--r"></div>
+                  <div class="car__wheel car__wheel--1"></div>
+                  <div class="car__wheel car__wheel--2"></div>
+                </div>
+                <div class="beam beam--l"></div>
+                <div class="beam beam--r"></div>
+              </div>
+              <div class="scene3d__glow scene3d__glow--blue"></div>
+            </div>
+            <div class="scene-card__body">
+              <span class="temp-chip temp-chip--cool">6000K · 冷白</span>
+              <h3>车载照明</h3>
+              <p>面向智能座舱与安全驾驶的前瞻光技术，像素级控光与自适应照明。</p>
+              <ul class="scene-tags"><li>前大灯</li><li>ADB 自适应</li><li>激光</li><li>氛围灯</li></ul>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <footer class="site-footer">
-    <button id="footerGuideBtn" class="link-btn" type="button" data-i18n="guide">整站使用说明</button>
-    <span class="views" id="homeViews" title="首页打开次数">—</span>
+    <div class="footer__brand">
+      <img class="footer__logo" src="logo.png" alt="得邦" />
+      <span>得邦 AI 门户</span>
+    </div>
+    <p class="footer__tag">欢迎访问得邦AI门户，在这里可以释放你的想象。</p>
+    <p class="footer__links"><a href="portfolio/">个人作品集 ↗</a><a href="https://github.com/ZJQAQ-png/ZJQAQ-png.github.io" target="_blank" rel="noopener noreferrer">GitHub ↗</a></p>
+    <p class="footer__copy">© 2026 得邦照明 · DEBANG. 用光，连接智能。</p>
   </footer>
 
-  <script src="./main.js"></script>
+  <dialog id="entry-dialog" class="entry-dialog" aria-labelledby="entry-title">
+    <form method="dialog"><button class="dialog-close" aria-label="关闭">✕</button></form>
+    <p class="section-eyebrow">WORKSPACE STATUS</p>
+    <h2 id="entry-title"></h2><p id="entry-description"></p>
+    <div class="entry-status"><span class="pending-dot"></span>已有项目 · 云端待接入</div>
+    <p>这个工作台正在准备云端运行环境，暂未开放公网体验。接入完成后，这张卡片将直接带你进入应用。</p>
+    <form method="dialog"><button class="btn btn--primary">知道了</button></form>
+  </dialog>
+  <script src="js/portal-config.js"></script>
+  <script src="js/portal-core.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
