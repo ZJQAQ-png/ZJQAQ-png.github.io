@@ -15,6 +15,9 @@ html { scroll-padding-top: 100px; }
 .section-note { color: var(--text-mute); font-size: 12px; }
 .portal-notice { padding: 12px 16px; border: 1px solid #233655; border-radius: 10px; background: #0c192c; color: #abc2df; font-size: 13px; margin: 16px 0 22px; }
 .carousel3d { min-width: 0; height: 420px; touch-action: pan-y; outline-offset: -4px; overflow: clip; }
+/* The empty z=0 ring must not intercept cards positioned behind it in 3D.
+   Visible cards opt back in through the carousel's inline pointer-events. */
+.carousel3d__ring { pointer-events: none; }
 .carousel3d .workspace-card { position: absolute; left: 50%; top: 50%; width: min(300px,calc(100% - 24px)); min-height: 320px; will-change: transform,opacity; transition: border-color .2s,box-shadow .2s; }
 .workspace-card[hidden] { display: none; }
 .workspace-card.is-active { border-color: var(--c); box-shadow: 0 0 0 1px var(--c),0 0 44px -10px var(--c); }
